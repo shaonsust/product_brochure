@@ -13,6 +13,9 @@ class App(models.Model):
     description = models.TextField()
     image = models.TextField()
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'app'
@@ -25,6 +28,9 @@ class Groups(models.Model):
     type = models.IntegerField()
     image = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'groups'
@@ -36,6 +42,9 @@ class Category(models.Model):
     type = models.IntegerField()
     name = models.CharField(max_length=255)
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
@@ -50,6 +59,9 @@ class Disease(models.Model):
     description = models.TextField()
     sub_title = models.CharField(max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'disease'
@@ -62,6 +74,9 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     sub_title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
