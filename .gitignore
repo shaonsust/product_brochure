@@ -1,0 +1,7 @@
+venv
+db.sqlite3
+static
+product_index/migrations
+
+# Byte-compiled / optimized / DLL files
+__pycache__

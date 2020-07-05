@@ -1,16 +1,70 @@
+import base64
+
+from django import forms
 from django.contrib import admin
 from product_index.models import App, Groups, Category, Disease, Product
 
 
+def image_upload(instance, image_file):
+    if image_file:
+        image_str64 = base64.b64encode(image_file.read())
+        instance.image = image_str64.decode('utf-8')
+        instance.save()
+
+    return instance
+
+
+class AppAdminForm(forms.ModelForm):
+    logo = forms.FileField(required=False)
+
+    class Meta:
+        model = App
+        fields = ('name', 'description', 'logo')
+
+    def save(self, commit=True):
+        image_file = self.cleaned_data.get('logo', None)
+        instance = super(AppAdminForm, self).save(commit=commit)
+
+        return image_upload(instance, image_file)
+
+
+class GroupsAdminForm(forms.ModelForm):
+    logo = forms.FileField(required=False)
+
+    class Meta:
+        model = Groups
+        fields = ('app', 'type', 'name', 'description', 'logo')
+
+    def save(self, commit=True):
+        image_file = self.cleaned_data.get('logo', None)
+        instance = super(GroupsAdminForm, self).save(commit=commit)
+
+        return image_upload(instance, image_file)
+
+
+class CategoryAdminForm(forms.ModelForm):
+    logo = forms.FileField(required=False)
+
+    class Meta:
+        model = Category
+        fields = ('app', 'groups', 'type', 'name', 'description', 'logo')
+
+    def save(self, commit=True):
+        instance = super(CategoryAdminForm, self).save(commit=commit)
+        image_file = self.cleaned_data.get('logo', None)
+
+        return image_upload(instance, image_file)
+
+
 class AppAdmin(admin.ModelAdmin):
-    fields = ('name', 'description', 'image')
+    form = AppAdminForm
     list_display = ('id', 'name', 'description')
     list_filter = ('name',)
     search_fields = ('name',)
 
 
 class GroupsAdmin(admin.ModelAdmin):
-    fields = ('app', 'type', 'name', 'image', 'description')
+    form = GroupsAdminForm
     list_display = ('id', 'app', 'type', 'name', 'description')
     list_filter = ('app', 'name')
     search_fields = ('id', 'name', 'app', 'type')

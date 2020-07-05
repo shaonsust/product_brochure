@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class App(models.Model):
@@ -41,7 +42,7 @@ class Category(models.Model):
     groups = models.ForeignKey('Groups', related_name='categories', on_delete=models.CASCADE)
     type = models.IntegerField()
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -56,7 +57,7 @@ class Disease(models.Model):
     groups = models.ForeignKey('Groups', models.DO_NOTHING, blank=True, null=True)
     category = models.ForeignKey(Category, related_name='diseases', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField(blank=True)
     sub_title = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -73,7 +74,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     sub_title = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField()
+    description = RichTextField(blank=True)
 
     def __str__(self):
         return self.name
