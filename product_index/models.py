@@ -26,7 +26,7 @@ class Groups(models.Model):
     app = models.ForeignKey(App, related_name='Groups', on_delete=models.CASCADE)
     name = models.CharField(max_length=35)
     description = models.TextField()
-    type = models.IntegerField()
+    type = models.IntegerField(choices=((1, 'Product'), (2, 'Disease')))
     image = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class Groups(models.Model):
 class Category(models.Model):
     app = models.ForeignKey(App, models.DO_NOTHING)
     groups = models.ForeignKey('Groups', related_name='categories', on_delete=models.CASCADE)
-    type = models.IntegerField()
+    type = models.IntegerField(choices=[(1, 'Product'), (2, 'Disease')])
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 

@@ -42,20 +42,6 @@ class GroupsAdminForm(forms.ModelForm):
         return image_upload(instance, image_file)
 
 
-class CategoryAdminForm(forms.ModelForm):
-    logo = forms.FileField(required=False)
-
-    class Meta:
-        model = Category
-        fields = ('app', 'groups', 'type', 'name', 'description', 'logo')
-
-    def save(self, commit=True):
-        instance = super(CategoryAdminForm, self).save(commit=commit)
-        image_file = self.cleaned_data.get('logo', None)
-
-        return image_upload(instance, image_file)
-
-
 class AppAdmin(admin.ModelAdmin):
     form = AppAdminForm
     list_display = ('id', 'name', 'description')
@@ -81,7 +67,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class DiseaseAdmin(admin.ModelAdmin):
     fields = ('app', 'category', 'name', 'sub_title', 'description')
     list_display = ('id', 'app', 'groups', 'category', 'name', 'sub_title')
-    list_filter = ('name', 'app', 'groups')
+    list_filter = ('name', 'app')
     search_fields = ('id', 'name', 'app', 'groups', 'sub_title')
     list_per_page = 15
 
@@ -89,7 +75,7 @@ class DiseaseAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     fields = ('app', 'category', 'name', 'sub_title', 'description')
     list_display = ('id', 'app', 'groups', 'category', 'name', 'sub_title')
-    list_filter = ('name', 'app', 'groups')
+    list_filter = ('name', 'app')
     search_fields = ('id', 'name', 'app', 'groups', 'sub_title')
     list_per_page = 15
 
