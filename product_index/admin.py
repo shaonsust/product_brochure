@@ -42,6 +42,14 @@ class GroupsAdminForm(forms.ModelForm):
         return image_upload(instance, image_file)
 
 
+def category_form_factory(groups):
+    class CategoryForm(forms.ModelForm):
+        m_file = forms.ModelChoiceField(
+            queryset=App.objects.filter(type=groups)
+        )
+    return CategoryForm
+
+
 class AppAdmin(admin.ModelAdmin):
     form = AppAdminForm
     list_display = ('id', 'name', 'description')
@@ -62,6 +70,11 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('name', 'app', 'groups')
     search_fields = ('id', 'name', 'app', 'groups')
     list_per_page = 15
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj is not None and obj.groups is not None:
+            kwargs['form'] = category_form_factory(obj.groups)
+        return super(CategoryAdmin, self).get_form(request, obj, **kwargs)
 
 
 class DiseaseAdmin(admin.ModelAdmin):

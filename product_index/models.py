@@ -39,7 +39,7 @@ class Groups(models.Model):
 
 class Category(models.Model):
     app = models.ForeignKey(App, models.DO_NOTHING)
-    groups = models.ForeignKey('Groups', related_name='categories', on_delete=models.CASCADE)
+    groups = models.ForeignKey(Groups, related_name='categories', on_delete=models.CASCADE)
     type = models.IntegerField(choices=[(1, 'Product'), (2, 'Disease')])
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -54,7 +54,7 @@ class Category(models.Model):
 
 class Disease(models.Model):
     app = models.ForeignKey(App, models.DO_NOTHING)
-    groups = models.ForeignKey('Groups', models.DO_NOTHING, blank=True, null=True)
+    groups = models.ForeignKey(Groups, models.DO_NOTHING, blank=True, null=True)
     category = models.ForeignKey(Category, related_name='diseases', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = RichTextField(blank=True)
