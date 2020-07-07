@@ -23,7 +23,7 @@ class App(models.Model):
 
 
 class Groups(models.Model):
-    app = models.ForeignKey(App, related_name='Groups', on_delete=models.CASCADE)
+    app = models.ForeignKey(App, related_name='groups', on_delete=models.CASCADE)
     name = models.CharField(max_length=35)
     description = models.TextField()
     type = models.IntegerField(choices=((1, 'Product'), (2, 'Disease')))

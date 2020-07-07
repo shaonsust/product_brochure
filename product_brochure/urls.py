@@ -19,7 +19,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ckeditor/', include('ckeditor_uploader.urls'))
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('product_index.urls'))
 ]
 
 if settings.DEBUG:
