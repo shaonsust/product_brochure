@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from graphene_django.views import GraphQLView
+from .schema import schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('product_index.urls'))
+    path('api/', include('product_index.urls')),
+    path('graphql/', GraphQLView.as_view(schema=schema, graphiql=True))
 ]
 
 if settings.DEBUG:

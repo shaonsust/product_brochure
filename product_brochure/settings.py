@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'debug_toolbar',
     'product_index',
-    'rest_framework'
+    'rest_framework',
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
@@ -114,6 +115,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+GRAPHENE = {
+    'SCHEMA': 'src.schema.schema'
 }
 
 # Internationalization
