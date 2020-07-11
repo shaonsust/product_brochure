@@ -1,0 +1,39 @@
+query getApps {
+  apps {
+    id
+    name,
+    description
+  }
+}
+
+query getApp {
+  app(id: 1) {
+    id
+    name
+    image
+    groups {
+      id
+      name
+      type
+      description
+      image
+      categories {
+        id
+        name
+        products {
+          id
+          name
+          subTitle
+          description
+        }
+        diseases {
+          id
+          name
+          subTitle
+          description
+        }
+      }
+    }
+  }
+}
+
